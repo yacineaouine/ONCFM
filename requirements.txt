@@ -1,3 +1,3 @@
-py -m pip install matplotlib
-py -m pip install statsmodels
-py -m pip install sklearn
+matplotlib
+statsmodels
+sklearn
