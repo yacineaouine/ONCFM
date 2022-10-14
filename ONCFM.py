@@ -15,11 +15,7 @@ from collections import Counter
 
 
 from sklearn import linear_model
-from sklearn import preprocessing
-from sklearn.cluster import KMeans
-from sklearn import decomposition
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import (confusion_matrix, accuracy_score)
 
 
 #Import des fichiers CSV
@@ -33,11 +29,8 @@ def model_prediction(data):
     na_data = data_billets.dropna()
     only_na = data_billets[~data_billets.index.isin(na_data.index)]
 
-    reg_multi = smf.ols('margin_low~diagonal+height_left+height_right+margin_up+length+is_genuine_n', data=data_dropna).fit()
-    reg_multi = smf.ols('margin_low~diagonal+height_left+height_right+margin_up+is_genuine_n', data=data_dropna).fit()
-    reg_multi = smf.ols('margin_low~height_left+height_right+margin_up+is_genuine_n', data=data_dropna).fit()
-    reg_multi = smf.ols('margin_low~height_left+margin_up+is_genuine_n', data=data_dropna).fit()
-    reg_multi = smf.ols('margin_low~margin_up+is_genuine_n', data=data_dropna).fit()
+    #Backward Méthode
+    reg_multi = smf.ols('margin_low~diagonal+height_left+height_right+margin_up+length', data=data_dropna).fit()
 
     only_na = only_na.fillna(0)
     a_prevoir = pd.DataFrame(only_na)
@@ -211,8 +204,10 @@ with st.sidebar:
     </style>
     <div class="footer">
     <p>
-    Developed with ❤ by <a style='display: block; text-align: center;' href="https://littleboytechnology.fr/" target="_blank">Little Boy Technology</a>
-    v1.2
+    Developed with ❤ by 
+    <a style='display: block; text-align: center;' href="https://yacineaouine-cv.littleboytechnology.fr/" target="_blank">Yacine Aouine</a>
+    <a style='display: block; text-align: center;' href="https://littleboytechnology.fr/" target="_blank">Little Boy Technology</a>
+    v1.3
     </p>
     </div>
     """
@@ -258,7 +253,7 @@ st.markdown(html_string, unsafe_allow_html=True)
 
 #CONTAINER: DONNEES D'ENTRAINEMENTS
 with st.expander("Voir les données d'entrainements"):
-        st.write("""Les données suivantes ont permises d'entrainer l'algorithme:""") 
+        st.write("""Les données suivantes ont permis d'entrainer l'algorithme:""") 
         st.write("""- 1 signifie que le BILLET EST VRAI""")
         st.write("""- O signifie que le BILLET EST FAUX""")
         data_billets
